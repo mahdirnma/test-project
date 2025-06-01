@@ -33,4 +33,9 @@ class UserService
             return $user;
         });
     }
+    public function deleteUser(User $user){
+        return app(TryService::class)(function () use ($user){
+            $user->delete();
+        });
+    }
 }
