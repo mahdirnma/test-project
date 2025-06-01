@@ -12,4 +12,16 @@ class UserService
             return User::all();
         });
     }
+
+    public function setUser($user)
+    {
+        return app(TryService::class)(function () use ($user){
+            return User::create($user);
+        });
+    }
+    public function getUser(User $user){
+        return app(TryService::class)(function () use ($user){
+            return $user;
+        });
+    }
 }
