@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Http\Client\Request;
 
 class UserService
 {
@@ -21,6 +22,14 @@ class UserService
     }
     public function getUser(User $user){
         return app(TryService::class)(function () use ($user){
+            return $user;
+        });
+    }
+
+    public function updateUser($request, User $user)
+    {
+        return app(TryService::class)(function () use ($request, $user){
+            $user->update($request);
             return $user;
         });
     }

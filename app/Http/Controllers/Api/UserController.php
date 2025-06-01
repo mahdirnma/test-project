@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\ApiResponseBuilder;
@@ -50,9 +51,13 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $result=$this->service->updateUser($request->validated(), $user);
+        $apiResponse=$result->success?
+            (new ApiResponseBuilder())->message('user updated successfully')->data(new UserResource($result->data)):
+            (new ApiResponseBuilder())->message('user not found')->data($result->data);
+        return $apiResponse->response();
     }
 
     /**
